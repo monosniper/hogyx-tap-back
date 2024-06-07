@@ -63,3 +63,11 @@ services:
       DB_URL: mongodb://root:rava2005_@mongo:27017/hogyx-tap
     networks:
       - hogyx-tap
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+    networks:
+      - hogyx-tap
