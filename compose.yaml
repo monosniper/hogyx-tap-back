@@ -33,6 +33,8 @@ services:
       - ./mongo-data:/data/db
     networks:
       - hogyx-tap
+    ports:
+      - 27017:27017
 
   mongo-express:
     image: mongo-express
