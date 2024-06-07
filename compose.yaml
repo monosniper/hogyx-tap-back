@@ -15,6 +15,7 @@ services:
       - ./www:/var/www
       - /etc/letsencrypt/ssl:/etc/nginx/ssl
       - ./nginx/auth.basic:/etc/nginx/auth.basic
+      - ./certbot/www:/var/www/certbot/:ro
     networks:
       - hogyx-tap
     depends_on:
