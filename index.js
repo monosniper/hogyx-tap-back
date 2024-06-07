@@ -33,6 +33,7 @@ app.use(express.static('uploads', {
 
 const start = () => {
     try {
+        console.log('HELLOOOO ', process.env.DB_URL)
         mongoose.connect(process.env.DB_URL).then(() => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
