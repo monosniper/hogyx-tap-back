@@ -34,7 +34,7 @@ app.use(express.static('uploads', {
 const start = () => {
     console.log(process.env.DB_URL)
     try {
-        mongoose.connect(process.env.DB_URL).then(() => {
+        mongoose.connect('mongodb://root:rava2005_@mongo:27017').then(() => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
             })
