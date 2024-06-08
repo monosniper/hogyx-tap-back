@@ -1,7 +1,7 @@
 require('dotenv').config();
 const UserModel = require('../models/user-model');
 const UserDto = require('../dtos/user-dto');
-const {makeid} = require("../helpers/makeId");
+const makeid = require("../helpers/makeId");
 
 class UserService {
     async login(tg_id, name) {

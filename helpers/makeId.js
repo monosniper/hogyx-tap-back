@@ -1,4 +1,4 @@
-export function makeid(length) {
+function makeid(length) {
 	let result = '';
 	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	const charactersLength = characters.length;
@@ -9,3 +9,5 @@ export function makeid(length) {
 	}
 	return result;
 }
+
+module.exports = makeid
