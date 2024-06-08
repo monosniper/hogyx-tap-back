@@ -1,13 +1,9 @@
 const ApiError = require('../exceptions/api-error');
 
 module.exports = function (req, res, next) {
-	console.log(req.get("tg_id"))
-	console.log(req.get("Tg_id"))
-	console.log(req.headers.Tg_id)
-	console.log(req.headers.tg_id)
 	console.log(req.headers)
 	try {
-		const authorizationHeader = req.get("tg_id");
+		const authorizationHeader = req.get("tg-id");
 		if (!authorizationHeader) {
 			return next(ApiError.UnauthorizedError());
 		}
