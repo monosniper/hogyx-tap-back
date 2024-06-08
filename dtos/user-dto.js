@@ -8,6 +8,7 @@ module.exports = class UserDto {
     balance;
     name;
     taps_count;
+    ref_code;
 
     constructor(model) {
         this.id = model._id;
@@ -19,5 +20,6 @@ module.exports = class UserDto {
         this.tap_amount = model.tap_amount;
         this.balance = model.balance;
         this.taps_count = model.taps_count;
+        this.ref_code = model.ref_code;
     }
 }

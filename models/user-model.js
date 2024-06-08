@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     energy: {type: Schema.Types.Number, default: 1000},
     taps_count: {type: Schema.Types.Number, default: 0},
     skill_level: {type: Schema.Types.Number, default: 1},
+    ref_code: {type: String},
 }, {timestamps: true});
 
 module.exports = model('User', UserSchema);

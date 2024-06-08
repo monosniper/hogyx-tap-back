@@ -1,13 +1,16 @@
 require('dotenv').config();
 const UserModel = require('../models/user-model');
 const UserDto = require('../dtos/user-dto');
+const {makeid} = require("../helpers/makeId");
 
 class UserService {
     async login(tg_id, name) {
         let user = await UserModel.findOne({tg_id})
 
         if(!user) {
-            user = await UserModel.create({tg_id, name})
+            const ref_code = makeid(24)
+
+            user = await UserModel.create({tg_id, name, ref_code})
         } else {
             if(user.name !== name) {
                 user.name = name
