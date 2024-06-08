@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
 			return next(ApiError.UnauthorizedError());
 		}
 
-		req.tg = authorizationHeader;
+		req.tg_id = authorizationHeader;
 		next();
 	} catch (e) {
 		return next(ApiError.UnauthorizedError());
