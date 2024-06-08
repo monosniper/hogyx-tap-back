@@ -6,6 +6,6 @@ const router = new Router();
 
 router.post('/login', TGMiddleware, UserController.login);
 router.patch('/taps', TGMiddleware, UserController.taps);
-router.patch('/', (req, res) => res.json('ok'));
+router.get('/', (req, res) => res.json('ok'));
 
 module.exports = router;
