@@ -2,6 +2,7 @@ require('dotenv').config();
 const UserModel = require('../models/user-model');
 const UserDto = require('../dtos/user-dto');
 const makeid = require("../helpers/makeId");
+const {levels} = require("../config");
 
 class UserService {
     async login(tg_id, name) {
@@ -24,9 +25,18 @@ class UserService {
     async taps(tg_id, taps) {
         let user = await UserModel.findOne({tg_id})
 
+        const amount = taps * user.tap_amount
+
         user.taps_count += taps
-        user.balance += taps * user.tap_amount
-        user.energy -= taps
+        user.balance += amount
+        user.experience += amount
+        user.energy--
+
+        if(user.experience >= levels[user.skill_level+1].value) {
+            user.skill_level++
+            user.max_energy += levels[user.skill_level].add_energy
+            user.energy = user.max_energy
+        }
 
         await user.save()
 
