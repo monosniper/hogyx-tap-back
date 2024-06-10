@@ -40,8 +40,8 @@ const start = () => {
 
                 const bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true});
 
-                bot.setWebHook("https://tap-api.hogyx.io/api/channel_webhook", {
-                    allowed_updates: JSON.stringify(['my_chat_member'])
+                bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
+                    allowed_updates: JSON.stringify(['chat_member'])
                 })
             })
         });
