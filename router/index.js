@@ -8,6 +8,9 @@ const router = new Router();
 router.post('/login', TGMiddleware, UserController.login);
 router.patch('/taps', TGMiddleware, UserController.taps);
 
+router.patch('/buy/energy', TGMiddleware, UserController.buyEnergy);
+router.patch('/buy/tap', TGMiddleware, UserController.buyTap);
+
 router.get('/leaders', TGMiddleware, UserController.getLeaders);
 
 router.get('/notifications', TGMiddleware, NotificationController.getUnread);

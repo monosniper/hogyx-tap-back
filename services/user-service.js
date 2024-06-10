@@ -3,18 +3,24 @@ const UserModel = require('../models/user-model');
 const UserDto = require('../dtos/user-dto');
 const makeid = require("../helpers/makeId");
 const {levels} = require("../config");
+const shop = require("../config");
 
 class UserService {
-    async login(tg_id, name, ref_code) {
+    async login(tg_id, name, ref_code, isPremium) {
         let user = await UserModel.findOne({tg_id}).populate('friends')
 
         if(!user) {
             user = await UserModel.create({tg_id, name, ref_code: makeid(24)})
 
             if(ref_code) {
-                await UserModel.findOneAndUpdate({ ref_code }, {
+                const ref_user = await UserModel.findOneAndUpdate({ ref_code }, {
                     $push: { friends: user._id },
-                })
+                }, {new: true})
+
+                ref_user.balance += 50000
+                ref_user.save()
+
+                user.balance += isPremium ? 150000 : 50000
             }
         } else {
             if(user.name !== name) {
@@ -34,6 +40,30 @@ class UserService {
 
     async subscribed(id) {
         return UserModel.updateOne({_id: id}, {subscribed: true});
+    }
+
+    async buyEnergy(tg_id) {
+        const user = await UserModel.findOne({tg_id})
+        const next_level = shop.energy[user.energy_level+1]
+
+        if(user.balance >= next_level.cost) {
+            user.energy_level++
+            user.max_energy += next_level.value
+            user.balance -= next_level.cost
+            user.save()
+        }
+    }
+
+    async buyTap(tg_id) {
+        const user = await UserModel.findOne({tg_id})
+        const next_level = shop.tap[user.tap_level+1]
+
+        if(user.balance >= next_level.cost) {
+            user.tap_level++
+            user.tap_amount += next_level.value
+            user.balance -= next_level.cost
+            user.save()
+        }
     }
 
     async taps(tg_id, taps) {
