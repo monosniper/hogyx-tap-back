@@ -63,6 +63,7 @@ services:
       PORT: 5000
       DB_URL: mongodb://root:rava2005_@mongo:27017
       BOT_TOKEN: "7438284377:AAHp71HlQuhU7rSxG7mDQLoT3eRlN3vZkV0"
+      CHANNEL_ID: -1002031276359
     networks:
       - hogyx-tap
 
