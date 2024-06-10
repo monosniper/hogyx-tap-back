@@ -11,7 +11,10 @@ module.exports = class UserDto {
     taps_count;
     ref_code;
     ref_user;
+    current_day;
     experience;
+    hogyx_user_id;
+    visited_site;
 
     constructor(model) {
         this.id = model._id;
@@ -27,5 +30,8 @@ module.exports = class UserDto {
         this.ref_code = model.ref_code;
         this.ref_user = model.ref_user;
         this.experience = model.experience;
+        this.current_day = model.current_day;
+        this.hogyx_user_id = model.hogyx_user_id;
+        this.visited_site = model.visited_site;
     }
 }

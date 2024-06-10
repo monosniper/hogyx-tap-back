@@ -6,6 +6,7 @@ const router = require('./router/index')
 const errorMiddleware = require('./middlewares/error-middleware')
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const TelegramBot = require('node-telegram-bot-api');
 
 const PORT = process.env.PORT || 5000;
 
@@ -36,6 +37,12 @@ const start = () => {
         mongoose.connect(process.env.DB_URL, { dbName: 'hogyx-tap' }).then(() => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
+
+                const bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true});
+
+                bot.setWebHook("https://tap-api.hogyx.io/api/channel_webhook", {
+                    allowed_updates: JSON.stringify(['my_chat_member'])
+                })
             })
         });
     } catch (e) {

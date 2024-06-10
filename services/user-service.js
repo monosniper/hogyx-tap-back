@@ -22,6 +22,12 @@ class UserService {
         return new UserDto(user)
     }
 
+    async getLeaders() {
+        const users = await UserModel.find({}).sort({experience: -1}).exec();
+
+        return users.map(user => new UserDto(user));
+    }
+
     async taps(tg_id, taps) {
         let user = await UserModel.findOne({tg_id})
 
