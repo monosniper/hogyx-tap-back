@@ -42,6 +42,8 @@ const start = () => {
 
                 bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
                     allowed_updates: JSON.stringify(['chat_member'])
+                }).then(rs => {
+                    console.log(rs)
                 })
             })
         });
