@@ -2,8 +2,7 @@ require('dotenv').config();
 const UserModel = require('../models/user-model');
 const UserDto = require('../dtos/user-dto');
 const makeid = require("../helpers/makeId");
-const {levels} = require("../config");
-const shop = require("../config");
+const {levels, shop} = require("../config");
 
 class UserService {
     async login(tg_id, name, ref_code, isPremium) {
