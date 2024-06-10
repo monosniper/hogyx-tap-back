@@ -14,6 +14,8 @@ module.exports = class UserDto {
     current_day;
     experience;
     hogyx_user_id;
+    energy_level;
+    tap_level;
     visited_site;
 
     constructor(model) {
@@ -29,6 +31,8 @@ module.exports = class UserDto {
         this.taps_count = model.taps_count;
         this.ref_code = model.ref_code;
         this.friends = model.friends;
+        this.energy_level = model.energy_level;
+        this.tap_level = model.tap_level;
         this.experience = model.experience;
         this.current_day = model.current_day;
         this.hogyx_user_id = model.hogyx_user_id;
