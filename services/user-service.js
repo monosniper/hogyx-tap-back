@@ -48,6 +48,7 @@ class UserService {
         if(user.balance >= next_level.cost) {
             user.energy_level++
             user.max_energy += next_level.value
+            user.energy = user.max_energy
             user.balance -= next_level.cost
             user.save()
         }
@@ -73,7 +74,7 @@ class UserService {
         user.taps_count += taps
         user.balance += amount
         user.experience += amount
-        user.energy--
+        user.energy -= taps
 
         if(user.experience >= levels[user.skill_level+1].value) {
             user.skill_level++
