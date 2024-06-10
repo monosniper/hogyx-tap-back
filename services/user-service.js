@@ -28,6 +28,10 @@ class UserService {
         return users.map(user => new UserDto(user));
     }
 
+    async subscribed(id) {
+        return UserModel.updateOne({_id: id}, {subscribed: true});
+    }
+
     async taps(tg_id, taps) {
         let user = await UserModel.findOne({tg_id})
 

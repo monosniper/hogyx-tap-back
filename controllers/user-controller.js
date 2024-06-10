@@ -40,6 +40,14 @@ class UserController {
         try {
             console.log(req.body)
 
+            const { chat_member: { chat: { id: chat_id }, from: { id: user_id }, new_chat_member: { status } } } = req.body
+
+            console.log(chat_id, user_id, status)
+
+            if(chat_id === process.env.CHANNEL_ID && status === 'member') {
+                await UserService.subscribed(user_id)
+            }
+
             return res.json('ok');
         } catch (e) {
             next(e);
