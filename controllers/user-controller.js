@@ -4,8 +4,8 @@ const NotificationService = require('../services/notification-service');
 class UserController {
     async login(req, res, next) {
         try {
-            const {name} = req.body;
-            const userData = await UserService.login(req.tg_id, name);
+            const {name, ref_code} = req.body;
+            const userData = await UserService.login(req.tg_id, name, ref_code);
 
             // await NotificationService.store(userData.id, 'day_gift', {day: 2, amount: 1000})
 
@@ -38,11 +38,7 @@ class UserController {
 
     async channelWebhook(req, res, next) {
         try {
-            console.log(req.body)
-
             const { chat_member: { chat: { id: chat_id }, from: { id: user_id }, new_chat_member: { status } } } = req.body
-
-            console.log(chat_id, user_id, status)
 
             if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
                 await UserService.subscribed(user_id)

@@ -10,7 +10,7 @@ module.exports = class UserDto {
     name;
     taps_count;
     ref_code;
-    ref_user;
+    friends;
     current_day;
     experience;
     hogyx_user_id;
@@ -28,7 +28,7 @@ module.exports = class UserDto {
         this.max_energy = model.max_energy;
         this.taps_count = model.taps_count;
         this.ref_code = model.ref_code;
-        this.ref_user = model.ref_user;
+        this.friends = model.friends;
         this.experience = model.experience;
         this.current_day = model.current_day;
         this.hogyx_user_id = model.hogyx_user_id;

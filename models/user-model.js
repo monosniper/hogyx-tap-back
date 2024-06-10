@@ -3,7 +3,7 @@ const {Schema, model} = require('mongoose');
 const UserSchema = new Schema({
     tg_id: {type: String, unique: true, required: true},
     name: {type: String, required: true},
-    ref_user: {type: Schema.Types.ObjectId},
+    friends: [{type: Schema.Types.ObjectId, ref: 'User'}],
     balance: {type: Schema.Types.Number, default: 0},
     experience: {type: Schema.Types.Number, default: 0},
     tap_amount: {type: Schema.Types.Number, default: 1},

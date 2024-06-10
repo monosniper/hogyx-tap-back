@@ -5,13 +5,17 @@ const makeid = require("../helpers/makeId");
 const {levels} = require("../config");
 
 class UserService {
-    async login(tg_id, name) {
-        let user = await UserModel.findOne({tg_id})
+    async login(tg_id, name, ref_code) {
+        let user = await UserModel.findOne({tg_id}).populate('friends')
 
         if(!user) {
-            const ref_code = makeid(24)
+            user = await UserModel.create({tg_id, name, ref_code: makeid(24)})
 
-            user = await UserModel.create({tg_id, name, ref_code})
+            if(ref_code) {
+                await UserModel.findOneAndUpdate({ ref_code }, {
+                    $push: { friends: user._id },
+                })
+            }
         } else {
             if(user.name !== name) {
                 user.name = name
