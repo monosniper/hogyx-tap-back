@@ -1,5 +1,4 @@
 const UserService = require('../services/user-service');
-const NotificationService = require('../services/notification-service');
 
 class UserController {
     async login(req, res, next) {

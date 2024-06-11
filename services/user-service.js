@@ -2,7 +2,9 @@ require('dotenv').config();
 const UserModel = require('../models/user-model');
 const UserDto = require('../dtos/user-dto');
 const makeid = require("../helpers/makeId");
-const {levels, shop} = require("../config");
+const {levels, shop, gifts} = require("../config");
+const diff_hours = require("../helpers/diffHours");
+const NotificationService = require('../services/notification-service');
 
 class UserService {
     async login(tg_id, name, ref_code, isPremium) {
@@ -27,6 +29,27 @@ class UserService {
                 user.name = name
                 await user.save()
             }
+        }
+
+        const diff = diff_hours(new Date(), user.last_day_gift)
+
+        if(!user.last_day_gift || (diff >= 24 && diff < 48)) {
+            user.last_day_gift = new Date()
+            if(user.current_day === 7) user.current_day = 0
+            const amount = gifts[user.current_day + 1]
+            user.balance += amount
+            user.current_day++
+            user.save()
+
+            await NotificationService.store(user._id, 'day_gift', {amount, day: user.current_day})
+        } else if (diff >= 48) {
+            user.current_day = 1
+            const amount = gifts[1]
+            user.balance += amount
+            user.last_day_gift = new Date()
+            user.save()
+
+            await NotificationService.store(user._id, 'day_gift', {amount, day: 1})
         }
 
         return new UserDto(user)
