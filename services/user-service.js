@@ -20,6 +20,7 @@ class UserService {
                 ref_user.save()
 
                 user.balance += isPremium ? 150000 : 50000
+                user.save()
             }
         } else {
             if(user.name !== name) {
