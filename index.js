@@ -56,10 +56,16 @@ const start = () => {
 
                     users.forEach((user) => {
                         user.friends.forEach(friend => {
+                            let total_percent = 0
+
                             if(friend.balance_by_day) {
                                 const percent = Math.round((friend.balance_by_day / 100) * percents.ref)
 
-                                user.balance += percent
+                                total_percent += percent
+                            }
+
+                            if(total_percent) {
+                                user.balance += total_percent
                                 user.save()
 
                                 NotificationService.store(user._id, 'ref_percent', {amount: percent})
