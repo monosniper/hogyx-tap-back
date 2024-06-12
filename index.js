@@ -48,8 +48,8 @@ const start = () => {
                     allowed_updates: JSON.stringify(['chat_member'])
                 })
 
-                cron.schedule('* * * * *', async () => {
-                    console.log('running a task every minute');
+                cron.schedule('0 0 * * *', async () => {
+                    console.log('running every day tasks');
 
                     // Friends ref percent
                     const users = await UserModel.find({}).populate('friends')
