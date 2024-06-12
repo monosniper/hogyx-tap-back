@@ -57,7 +57,7 @@ const start = () => {
                     users.forEach((user) => {
                         user.friends.forEach(friend => {
                             if(friend.balance_by_day) {
-                                const percent = (friend.balance_by_day / 100) * percents.ref
+                                const percent = Math.round((friend.balance_by_day / 100) * percents.ref)
 
                                 user.balance += percent
                                 user.save()
