@@ -9,6 +9,7 @@ const NotificationService = require('../services/notification-service');
 class UserService {
     async login(tg_id, name, ref_code, isPremium) {
         let user = await UserModel.findOne({tg_id}).populate('friends')
+        let save = false
 
         if(!user) {
             user = await UserModel.create({tg_id, name, ref_code: makeid(24)})
@@ -22,12 +23,12 @@ class UserService {
                 ref_user.save()
 
                 user.balance += isPremium ? 150000 : 50000
-                user.save()
+                save = true
             }
         } else {
             if(user.name !== name) {
                 user.name = name
-                await user.save()
+                save = true
             }
         }
 
@@ -39,7 +40,7 @@ class UserService {
             const amount = gifts[user.current_day + 1]
             user.balance += amount
             user.current_day++
-            user.save()
+            save = true
 
             await NotificationService.store(user._id, 'day_gift', {amount, day: user.current_day})
         } else if (diff >= 48) {
@@ -47,10 +48,12 @@ class UserService {
             const amount = gifts[1]
             user.balance += amount
             user.last_day_gift = new Date()
-            user.save()
+            save = true
 
             await NotificationService.store(user._id, 'day_gift', {amount, day: 1})
         }
+
+        save && await user.save()
 
         return new UserDto(user)
     }

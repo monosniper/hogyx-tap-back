@@ -16,7 +16,7 @@ module.exports = class UserDto {
     hogyx_user_id;
     energy_level;
     tap_level;
-    visited_site;
+    last_site_visit;
     last_day_gift;
 
     constructor(model) {
@@ -38,7 +38,7 @@ module.exports = class UserDto {
         this.current_day = model.current_day;
         this.subscribed = model.subscribed;
         this.hogyx_user_id = model.hogyx_user_id;
-        this.visited_site = model.visited_site;
+        this.last_site_visit = model.last_site_visit;
         this.last_day_gift = model.last_day_gift;
     }
 }

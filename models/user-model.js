@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     tap_level: {type: Schema.Types.Number, default: 1},
     ref_code: {type: String},
     hogyx_user_id: {type: String},
-    visited_site: {type: Boolean, default: false},
+    last_site_visit: {type: Date},
     subscribed: {type: Boolean, default: false},
     last_day_gift: {type: Date},
     current_day: {type: Schema.Types.Number, default: 0},
