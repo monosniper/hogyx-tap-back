@@ -8,6 +8,7 @@ const NotificationSchema = new Schema({
         enum: [
             'day_gift',
             'ref_percent',
+            'hour_income',
         ],
         default: 'day_gift',
     },

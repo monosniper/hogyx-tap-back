@@ -53,6 +53,18 @@ class UserService {
             await NotificationService.store(user._id, 'day_gift', {amount, day: 1})
         }
 
+        // Offline income
+        if(user.offline_income) {
+            user.balance += user.offline_income
+
+            await NotificationService.store(user._id, 'hour_income', {amount: user.offline_income})
+
+            user.offline_income = 0
+            user.start_offline_income = new Date()
+
+            save = true
+        }
+
         save && await user.save()
 
         return new UserDto(user)
@@ -91,6 +103,18 @@ class UserService {
         if(user.balance >= next_level.cost) {
             user.tap_level++
             user.tap_amount += next_level.value
+            user.balance -= next_level.cost
+            user.save()
+        }
+    }
+
+    async buyHour(tg_id) {
+        const user = await UserModel.findOne({tg_id})
+        const next_level = shop.hour[user.hour_level+1]
+
+        if(user.balance >= next_level.cost) {
+            user.hour_level++
+            user.hour_amount += next_level.value
             user.balance -= next_level.cost
             user.save()
         }

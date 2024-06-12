@@ -11,6 +11,7 @@ const cron = require('node-cron');
 const UserModel = require('./models/user-model');
 const NotificationService = require('./services/notification-service');
 const {percents} = require("./config");
+const diff_hours = require("./helpers/diffHours");
 
 const PORT = process.env.PORT || 5000;
 
@@ -74,6 +75,25 @@ const start = () => {
                             friend.balance_by_day = 0
                             friend.save()
                         })
+                    })
+                });
+
+                // Hour income
+                cron.schedule('0 * * * *', async () => {
+                    console.log('running every hour tasks');
+
+                    const users = await UserModel.find({})
+
+                    users.forEach((user) => {
+                        if(!user.start_offline_income) user.start_offline_income = new Date()
+
+                        const diff = diff_hours(new Date(), user.start_offline_income)
+
+                        if(diff < 24) {
+                            user.offline_income += user.hour_amount
+                        }
+
+                        user.save()
                     })
                 });
             })

@@ -14,12 +14,15 @@ const UserSchema = new Schema({
     taps_count: {type: Schema.Types.Number, default: 0},
     skill_level: {type: Schema.Types.Number, default: 1},
     energy_level: {type: Schema.Types.Number, default: 1},
+    hour_level: {type: Schema.Types.Number, default: 1},
     tap_level: {type: Schema.Types.Number, default: 1},
+    offline_income: {type: Schema.Types.Number, default: 0},
     ref_code: {type: String},
     hogyx_user_id: {type: String},
     last_site_visit: {type: Date},
     subscribed: {type: Boolean, default: false},
     last_day_gift: {type: Date},
+    start_offline_income: {type: Date},
     current_day: {type: Schema.Types.Number, default: 0},
 }, {timestamps: true});
 

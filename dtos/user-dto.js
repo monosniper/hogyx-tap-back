@@ -14,6 +14,7 @@ module.exports = class UserDto {
     current_day;
     experience;
     hogyx_user_id;
+    hour_level;
     energy_level;
     tap_level;
     last_site_visit;
@@ -37,6 +38,7 @@ module.exports = class UserDto {
         this.experience = model.experience;
         this.current_day = model.current_day;
         this.subscribed = model.subscribed;
+        this.hour_level = model.hour_level;
         this.hogyx_user_id = model.hogyx_user_id;
         this.last_site_visit = model.last_site_visit;
         this.last_day_gift = model.last_day_gift;

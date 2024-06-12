@@ -45,6 +45,16 @@ class UserController {
         }
     }
 
+    async buyHour(req, res, next) {
+        try {
+            await UserService.buyHour(req.tg_id);
+
+            return res.json('ok');
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getLeaders(req, res, next) {
         try {
             const leaders = await UserService.getLeaders();
