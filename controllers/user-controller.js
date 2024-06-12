@@ -55,6 +55,28 @@ class UserController {
         }
     }
 
+    async siteVisited(req, res, next) {
+        try {
+            const { hogyx_user_id } = req.params
+            await UserService.siteVisited(hogyx_user_id);
+
+            return res.json('ok');
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async accountLink(req, res, next) {
+        try {
+            const { hogyx_user_id } = req.params
+            await UserService.accountLink(hogyx_user_id);
+
+            return res.json('ok');
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async channelWebhook(req, res, next) {
 
         const {
@@ -65,7 +87,6 @@ class UserController {
             }
         } = req.body
 
-        console.log(chat_id, user_tg_id, status, process.env.CHANNEL_ID )
         try {
             const {
                 chat_member: {

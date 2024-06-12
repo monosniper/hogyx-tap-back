@@ -22,7 +22,7 @@ class UserService {
                 ref_user.balance += 50000
                 ref_user.save()
 
-                user.balance += isPremium ? 150000 : 50000
+                user.balance += isPremium ? gifts.other.friend.premium : gifts.other.friend.non_premium
                 save = true
             }
         } else {
@@ -37,7 +37,7 @@ class UserService {
         if(!user.last_day_gift || (diff >= 24 && diff < 48)) {
             user.last_day_gift = new Date()
             if(user.current_day === 7) user.current_day = 0
-            const amount = gifts[user.current_day + 1]
+            const amount = gifts.days[user.current_day + 1]
             user.balance += amount
             user.current_day++
             save = true
@@ -45,7 +45,7 @@ class UserService {
             await NotificationService.store(user._id, 'day_gift', {amount, day: user.current_day})
         } else if (diff >= 48) {
             user.current_day = 1
-            const amount = gifts[1]
+            const amount = gifts.days[1]
             user.balance += amount
             user.last_day_gift = new Date()
             save = true
@@ -65,7 +65,10 @@ class UserService {
     }
 
     async subscribed(tg_id) {
-        return UserModel.updateOne({tg_id}, {subscribed: true});
+        const user = await UserModel.findOne({tg_id});
+        user.balance += gifts.other.subscribed
+        user.subscibed = true
+        await user.save()
     }
 
     async buyEnergy(tg_id) {
@@ -90,6 +93,30 @@ class UserService {
             user.tap_amount += next_level.value
             user.balance -= next_level.cost
             user.save()
+        }
+    }
+
+    async siteVisited(hogyx_user_id) {
+        const user = await UserModel.findOne({hogyx_user_id})
+
+        if(user) {
+            const diff = diff_hours(new Date(), user.last_site_visit)
+
+            if(diff && diff > 24) {
+                user.balance += gifts.other.site_visit
+                user.last_site_visit = new Date()
+
+                await user.save()
+            }
+        }
+    }
+
+    async accountLink(hogyx_user_id) {
+        const user = await UserModel.findOne({hogyx_user_id})
+
+        if(user && !(user?.hogyx_user_id)) {
+            user.hogyx_user_id = hogyx_user_id
+            await user.save()
         }
     }
 
