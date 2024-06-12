@@ -9,6 +9,8 @@ const fileUpload = require('express-fileupload');
 const TelegramBot = require('node-telegram-bot-api');
 const cron = require('node-cron');
 const UserModel = require('./models/user-model');
+const NotificationService = require('./services/notification-service');
+const {percents} = require("./config");
 
 const PORT = process.env.PORT || 5000;
 
@@ -49,11 +51,23 @@ const start = () => {
                 cron.schedule('* * * * *', async () => {
                     console.log('running a task every minute');
 
-                    // Everyday gift
-                    const users = await UserModel.find({})
+                    // Friends ref percent
+                    const users = await UserModel.find({}).populate('friends')
 
                     users.forEach((user) => {
-                        console.log(user.name)
+                        user.friends.forEach(friend => {
+                            if(friend.balance_by_day) {
+                                const percent = (friend.balance_by_day / 100) * percents.ref
+
+                                user.balance += percent
+                                user.save()
+
+                                NotificationService.store(user._id, 'ref_percent', {amount: percent})
+                            }
+
+                            friend.balance_by_day = 0
+                            friend.save()
+                        })
                     })
                 });
             })

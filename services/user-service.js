@@ -127,6 +127,7 @@ class UserService {
 
         user.taps_count += taps
         user.balance += amount
+        user.balance_by_day += amount
         user.experience += amount
         user.energy -= taps
 
