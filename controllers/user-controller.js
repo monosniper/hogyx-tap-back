@@ -56,11 +56,27 @@ class UserController {
     }
 
     async channelWebhook(req, res, next) {
+
+        const {
+            chat_member: {
+                chat: { id: chat_id },
+                from: { id: user_tg_id },
+                new_chat_member: { status }
+            }
+        } = req.body
+
+        console.log(chat_id, user_tg_id, status, process.env.CHANNEL_ID )
         try {
-            const { chat_member: { chat: { id: chat_id }, from: { id: user_id }, new_chat_member: { status } } } = req.body
+            const {
+                chat_member: {
+                    chat: { id: chat_id },
+                    from: { id: user_tg_id },
+                    new_chat_member: { status }
+                }
+            } = req.body
 
             if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
-                await UserService.subscribed(user_id)
+                await UserService.subscribed(user_tg_id)
             }
 
             return res.json('ok');
