@@ -61,8 +61,8 @@ class UserService {
         return users.map(user => new UserDto(user));
     }
 
-    async subscribed(id) {
-        return UserModel.updateOne({_id: id}, {subscribed: true});
+    async subscribed(tg_id) {
+        return UserModel.updateOne({tg_id}, {subscribed: true});
     }
 
     async buyEnergy(tg_id) {
