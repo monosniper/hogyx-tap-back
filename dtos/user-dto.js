@@ -36,6 +36,7 @@ module.exports = class UserDto {
         this.tap_level = model.tap_level;
         this.experience = model.experience;
         this.current_day = model.current_day;
+        this.subscribed = model.subscribed;
         this.hogyx_user_id = model.hogyx_user_id;
         this.visited_site = model.visited_site;
         this.last_day_gift = model.last_day_gift;
