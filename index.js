@@ -56,6 +56,9 @@ const start = () => {
                     const users = await UserModel.find({}).populate('friends')
 
                     users.forEach((user) => {
+                        user.energy = user.max_energy
+                        user.save()
+
                         user.friends.forEach(friend => {
                             let total_percent = 0
 
