@@ -25,6 +25,17 @@ class UserController {
         }
     }
 
+    async energy(req, res, next) {
+        try {
+            const {count} = req.body;
+            const userData = await UserService.energy(req.tg_id, count);
+
+            return res.json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async buyEnergy(req, res, next) {
         try {
             await UserService.buyEnergy(req.tg_id);

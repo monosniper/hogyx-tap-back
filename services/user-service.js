@@ -144,6 +144,16 @@ class UserService {
         }
     }
 
+    async energy(tg_id, count) {
+        let user = await UserModel.findOne({tg_id})
+
+        user.energy += count
+
+        await user.save()
+
+        return new UserDto(user)
+    }
+
     async taps(tg_id, taps) {
         let user = await UserModel.findOne({tg_id})
 

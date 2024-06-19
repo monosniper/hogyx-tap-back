@@ -7,6 +7,7 @@ const router = new Router();
 
 router.post('/login', TGMiddleware, UserController.login);
 router.patch('/taps', TGMiddleware, UserController.taps);
+router.patch('/energy', TGMiddleware, UserController.energy);
 
 router.patch('/buy/energy', TGMiddleware, UserController.buyEnergy);
 router.patch('/buy/tap', TGMiddleware, UserController.buyTap);
