@@ -65,6 +65,7 @@ class UserService {
             save = true
         }
 
+        user.last_user_online = new Date()
         save && await user.save()
 
         return new UserDto(user)
@@ -92,6 +93,7 @@ class UserService {
             user.max_energy += next_level.value
             user.energy = user.max_energy
             user.balance -= next_level.cost
+            user.last_user_online = new Date()
             user.save()
         }
     }
@@ -104,6 +106,7 @@ class UserService {
             user.tap_level++
             user.tap_amount += next_level.value
             user.balance -= next_level.cost
+            user.last_user_online = new Date()
             user.save()
         }
     }
@@ -116,6 +119,7 @@ class UserService {
             user.hour_level++
             user.hour_amount += next_level.value
             user.balance -= next_level.cost
+            user.last_user_online = new Date()
             user.save()
         }
     }
@@ -150,6 +154,7 @@ class UserService {
         user.energy += count
 
         await user.save()
+        user.last_user_online = new Date()
 
         return new UserDto(user)
     }
@@ -164,6 +169,7 @@ class UserService {
         user.balance_by_day += amount
         user.experience += amount
         user.energy -= taps
+        user.last_user_online = new Date()
 
         if(user.experience >= levels[user.skill_level+1].value) {
             user.skill_level++

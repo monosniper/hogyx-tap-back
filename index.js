@@ -12,6 +12,7 @@ const UserModel = require('./models/user-model');
 const NotificationService = require('./services/notification-service');
 const {percents, main} = require("./config");
 const diff_hours = require("./helpers/diffHours");
+const diff_minutes = require("./helpers/diffMinutes");
 
 const PORT = process.env.PORT || 5000;
 
@@ -88,18 +89,20 @@ const start = () => {
                     const users = await UserModel.find({})
 
                     users.forEach((user) => {
-                        if(!user.start_offline_income) user.start_offline_income = new Date()
+                        if(diff_minutes(new Date(), user.last_user_online) > 5) {
+                            if(!user.start_offline_income) user.start_offline_income = new Date()
 
-                        const diff = diff_hours(new Date(), user.start_offline_income)
+                            const diff = diff_hours(new Date(), user.start_offline_income)
 
-                        if(diff < 24) {
-                            user.offline_income += user.hour_amount
-                        } else if(diff_hours(new Date(), user.last_notified_offline) > 24) {
-                            bot.sendMessage(user.tg_id, 'Вы достигли максимальной ежедневной награды - ' + user.offline_income + ', зайдите, чтобы ее забрать!');
-                            user.last_notified_offline = new Date()
+                            if(diff < 24) {
+                                user.offline_income += user.hour_amount
+                            } else if(diff_hours(new Date(), user.last_notified_offline) > 24) {
+                                bot.sendMessage(user.tg_id, 'Вы достигли максимальной ежедневной награды - ' + user.offline_income + ', зайдите, чтобы ее забрать!');
+                                user.last_notified_offline = new Date()
+                            }
+
+                            user.save()
                         }
-
-                        user.save()
                     })
                 });
 
@@ -110,20 +113,22 @@ const start = () => {
                     const users = await UserModel.find({})
 
                     users.forEach((user) => {
-                        user.energy += 60 / main.energy_recovery
+                        if(diff_minutes(new Date(), user.last_user_online) > 5) {
+                            user.energy += 60 / main.energy_recovery
 
-                        if(user.energy > user.max_energy) {
-                            user.energy = user.max_energy
+                            if(user.energy > user.max_energy) {
+                                user.energy = user.max_energy
+                            }
+
+                            const diff = diff_hours(new Date(), user.last_notified_energy)
+
+                            if(user.energy === user.max_energy && diff > 24) {
+                                bot.sendMessage(user.tg_id, 'Энергия восстановлена - заходи скорее!');
+                                user.last_notified_energy = new Date()
+                            }
+
+                            user.save()
                         }
-
-                        const diff = diff_hours(new Date(), user.last_notified_energy)
-
-                        if(user.energy === user.max_energy && diff > 24) {
-                            bot.sendMessage(user.tg_id, 'Энергия восстановлена - заходи скорее!');
-                            user.last_notified_energy = new Date()
-                        }
-
-                        user.save()
                     })
                 });
             })
