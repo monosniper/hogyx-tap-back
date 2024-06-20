@@ -8,7 +8,9 @@ class NotificationService {
     }
 
     async makeRead(id) {
-        await NotificationModel.updateOne({_id: id}, {read_at: new Date()})
+        const notification = await NotificationModel.findById(id);
+        notification.read_at = new Date();
+        await notification.save()
     }
 
     async getUnread(tg_id) {

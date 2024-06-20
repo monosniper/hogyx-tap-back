@@ -23,6 +23,8 @@ const UserSchema = new Schema({
     subscribed: {type: Boolean, default: false},
     last_day_gift: {type: Date},
     start_offline_income: {type: Date},
+    last_notified_offline: {type: Date},
+    last_notified_energy: {type: Date},
     current_day: {type: Schema.Types.Number, default: 0},
 }, {timestamps: true});
 

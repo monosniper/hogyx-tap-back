@@ -10,7 +10,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const cron = require('node-cron');
 const UserModel = require('./models/user-model');
 const NotificationService = require('./services/notification-service');
-const {percents} = require("./config");
+const {percents, main} = require("./config");
 const diff_hours = require("./helpers/diffHours");
 
 const PORT = process.env.PORT || 5000;
@@ -94,6 +94,33 @@ const start = () => {
 
                         if(diff < 24) {
                             user.offline_income += user.hour_amount
+                        } else if(diff_hours(new Date(), user.last_notified_offline) > 24) {
+                            bot.sendMessage(user.tg_id, 'Вы достигли максимальной ежедневной награды - ' + user.offline_income + ', зайдите, чтобы ее забрать!');
+                            user.last_notified_offline = new Date()
+                        }
+
+                        user.save()
+                    })
+                });
+
+                // Energy recovery
+                cron.schedule('* * * * *', async () => {
+                    console.log('running every minute tasks');
+
+                    const users = await UserModel.find({})
+
+                    users.forEach((user) => {
+                        user.energy += 60 / main.energy_recovery
+
+                        if(user.energy > user.max_energy) {
+                            user.energy = user.max_energy
+                        }
+
+                        const diff = diff_hours(new Date(), user.last_notified_energy)
+
+                        if(user.energy === user.max_energy && diff > 24) {
+                            bot.sendMessage(user.tg_id, 'Энергия восстановлена - заходи скорее!');
+                            user.last_notified_energy = new Date()
                         }
 
                         user.save()
