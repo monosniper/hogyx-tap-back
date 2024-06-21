@@ -80,7 +80,7 @@ class UserService {
     async subscribed(tg_id) {
         const user = await UserModel.findOne({tg_id});
         user.balance += gifts.other.subscribed
-        user.subscibed = true
+        user.subscribed = true
         await user.save()
     }
 
