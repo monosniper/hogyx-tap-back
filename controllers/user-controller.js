@@ -113,7 +113,8 @@ class UserController {
                 if(new_chat_member) {
                     const { status } = new_chat_member
 
-                    console.log('status', status)
+                    console.log('status', status, user_tg_id)
+                    console.log(chat_id.toString(), (process.env.CHANNEL_ID).toString(), chat_id.toString() === (process.env.CHANNEL_ID).toString())
 
                     if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
                         await UserService.subscribed(user_tg_id)
