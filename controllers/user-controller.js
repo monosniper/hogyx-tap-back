@@ -108,15 +108,9 @@ class UserController {
             }
         } = req.body
 
-        try {
-            const {
-                chat_member: {
-                    chat: { id: chat_id },
-                    from: { id: user_tg_id },
-                    new_chat_member: { status }
-                }
-            } = req.body
+        console.log('HOOK', chat_id, user_tg_id, status, process.env.CHANNEL_ID)
 
+        try {
             if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
                 await UserService.subscribed(user_tg_id)
             }

@@ -152,6 +152,7 @@ class UserService {
         let user = await UserModel.findOne({tg_id})
 
         user.energy += count
+        if(user.energy > user.max_energy) user.energy = user.max_energy
 
         await user.save()
         user.last_user_online = new Date()
