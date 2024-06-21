@@ -109,6 +109,7 @@ class UserController {
 
         // console.log('HOOK', chat_id, user_tg_id, status, process.env.CHANNEL_ID)
         console.log(req.body.chat_member)
+        return res.json('ok');
 
         // try {
         //     if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
