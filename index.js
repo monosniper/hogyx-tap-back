@@ -58,7 +58,6 @@ const start = () => {
 
                     users.forEach((user) => {
                         user.energy = user.max_energy
-                        user.save()
 
                         user.friends.forEach(friend => {
                             let total_percent = 0
@@ -71,7 +70,6 @@ const start = () => {
 
                             if(total_percent) {
                                 user.balance += total_percent
-                                user.save()
 
                                 NotificationService.store(user._id, 'ref_percent', {amount: percent})
                             }
@@ -79,6 +77,8 @@ const start = () => {
                             friend.balance_by_day = 0
                             friend.save()
                         })
+
+                        user.save()
                     })
                 });
 
