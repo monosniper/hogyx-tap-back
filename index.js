@@ -50,6 +50,8 @@ const start = () => {
                     allowed_updates: JSON.stringify(['chat_member'])
                 })
 
+                bot.getWebHookInfo().then(console.log)
+
                 cron.schedule('0 0 * * *', async () => {
                     console.log('running every day tasks');
 
