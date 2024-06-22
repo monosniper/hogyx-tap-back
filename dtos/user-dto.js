@@ -19,6 +19,8 @@ module.exports = class UserDto {
     tap_level;
     last_site_visit;
     last_day_gift;
+    inst_subscribed;
+    tt_subscribed;
 
     constructor(model) {
         this.id = model._id;
@@ -42,5 +44,7 @@ module.exports = class UserDto {
         this.hogyx_user_id = model.hogyx_user_id;
         this.last_site_visit = model.last_site_visit;
         this.last_day_gift = model.last_day_gift;
+        this.inst_subscribed = model.inst_subscribed;
+        this.tt_subscribed = model.tt_subscribed;
     }
 }
