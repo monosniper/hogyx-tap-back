@@ -151,7 +151,7 @@ class UserController {
                         reply_markup: JSON.stringify({
                             inline_keyboard: [
                                 [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
-                                [{text: '✨ Подписатсья на канал', url: 'https://t.me.hogyx_io'}],
+                                [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
                             ]
                         })
                     });
