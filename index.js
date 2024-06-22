@@ -44,8 +44,8 @@ const start = () => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
 
-                const bot = new TelegramBot('7438284377:AAGQ20nSSjneAcxhfWPaUtymU4lK6VcQ5B8');
-
+                const bot = new TelegramBot(process.env.BOT_TOKEN);
+                console.log(process.env.BOT_TOKEN)
                 bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
                     allowed_updates: JSON.stringify(['message', 'chat_member'])
                 })
