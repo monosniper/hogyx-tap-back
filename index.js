@@ -6,13 +6,13 @@ const router = require('./router/index')
 const errorMiddleware = require('./middlewares/error-middleware')
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
-const TelegramBot = require('node-telegram-bot-api');
 const cron = require('node-cron');
 const UserModel = require('./models/user-model');
 const NotificationService = require('./services/notification-service');
 const {percents, main} = require("./config");
 const diff_hours = require("./helpers/diffHours");
 const diff_minutes = require("./helpers/diffMinutes");
+const bot = require("./bot");
 
 const PORT = process.env.PORT || 5000;
 
@@ -44,12 +44,9 @@ const start = () => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
 
-                const bot = new TelegramBot(process.env.BOT_TOKEN);
-                console.log(process.env.BOT_TOKEN)
                 bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
                     allowed_updates: JSON.stringify(['message', 'chat_member'])
                 })
-                bot.getWebHookInfo().then(console.log)
 
                 cron.schedule('0 0 * * *', async () => {
                     console.log('running every day tasks');

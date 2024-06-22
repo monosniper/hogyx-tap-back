@@ -1,4 +1,5 @@
 const UserService = require('../services/user-service');
+const bot = require("../bot");
 
 class UserController {
     async login(req, res, next) {
@@ -143,7 +144,7 @@ Your referral link: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
             }
         }
         try {
-            const { chat_member } = req.body
+            const { chat_member, message } = req.body
 
             if(chat_member) {
                 const {
@@ -161,12 +162,19 @@ Your referral link: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
                         await UserService.subscribed(user_tg_id)
                     }
                 }
-            }
+            } else if (message) {
+                const { text, chat: { id, first_name }, from: { language_code } } = message
 
-            return res.json('ok');
+                if(text === '/start') {
+                    const user = await UserService.login(id, first_name)
+                    await bot.sendMessage(id, texts.start[language_code](user.ref_code));
+                }
+            }
         } catch (e) {
             next(e);
         }
+
+        return res.json('ok');
     }
 }
 
