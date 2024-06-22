@@ -21,6 +21,8 @@ const UserSchema = new Schema({
     hogyx_user_id: {type: String},
     last_site_visit: {type: Date},
     subscribed: {type: Boolean, default: false},
+    inst_subscribed: {type: Boolean, default: false},
+    tt_subscribed: {type: Boolean, default: false},
     last_user_online: {type: Date},
     last_day_gift: {type: Date},
     start_offline_income: {type: Date},
