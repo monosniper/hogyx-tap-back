@@ -13,8 +13,6 @@ const NotificationService = require('./services/notification-service');
 const {percents, main} = require("./config");
 const diff_hours = require("./helpers/diffHours");
 const diff_minutes = require("./helpers/diffMinutes");
-const UserService = require("./services/user-service");
-// const bot = require("./bot");
 
 const PORT = process.env.PORT || 5000;
 
@@ -40,45 +38,18 @@ app.use(express.static('uploads', {
     }
 }));
 
-const texts = {
-    start: {
-        ru: (ref_code) => `
-Добро пожаловать в HOGYX! Нажимай на монетку и увеличивай свой баланс 🤝
-        
-- Поднимитесь на вершину таблицы лидеров и получите вкусные награды в виде Airdrops. 🥇
-- Большая часть распределения токенов HOGYX (HOG) произойдет среди игроков здесь. 🪂
-- Следи за новыми заданиями ведь кроме токена у тебя есть шанс получить уникальные награды. 🎁
-                
-Твоя реферальная ссылка: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
-        `,
-        en: (ref_code) => `
-Welcome to HOGYX! Click on the coin and increase your balance 🤝
- 
-- Climb to the top of the leaderboard and get delicious rewards in the form of Airdrops. 🥇
-- Most of the distribution of HOGYX (HOG) tokens will happen among the players here. 🪂
-- Keep an eye on new tasks, because besides the token, you have a chance to get unique rewards. 🎁
-             
-Your referral link: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
-        `,
-    }
-}
-// const bot = new TelegramBot('6441349723:AAHHFviVr0e3ORa8Gb6ZCyLKN-5_rr3pqPI', { polling: true, });
-const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true, });
-
 const start = () => {
     try {
         mongoose.connect(process.env.DB_URL, { dbName: 'hogyx-tap' }).then(() => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
 
-                bot.on('message', async msg => {
-                    const { text, chat: { id, first_name }, from: { language_code } } = msg
+                const bot = new TelegramBot('7438284377:AAGQ20nSSjneAcxhfWPaUtymU4lK6VcQ5B8');
 
-                    if(text === '/start') {
-                        const user = await UserService.login(id, first_name)
-                        await bot.sendMessage(id, texts.start[language_code](user.ref_code));
-                    }
-                });
+                bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
+                    allowed_updates: JSON.stringify(['message', 'chat_member'])
+                })
+                bot.getWebHookInfo().then(console.log)
 
                 cron.schedule('0 0 * * *', async () => {
                     console.log('running every day tasks');
@@ -128,7 +99,7 @@ const start = () => {
                                 user.offline_income += user.hour_amount
                             } else if(diff_hours(new Date(), user.last_notified_offline) > 24) {
                                 bot.sendMessage(user.tg_id, 'Вы достигли максимальной ежедневной награды - ' + user.offline_income + ', зайдите, чтобы ее забрать!').catch((error) => {
-                                    console.log(error.code);
+                                    console.log(error.code, '134');
                                     console.log(error.response.body);
                                 });
                                 user.last_notified_offline = new Date()
@@ -156,7 +127,7 @@ const start = () => {
 
                             if(user.energy === user.max_energy && diff > 24) {
                                 bot.sendMessage(user.tg_id, 'Энергия восстановлена - заходи скорее!').catch((error) => {
-                                    console.log(error.code);
+                                    console.log(error.code, '162');
                                     console.log(error.response.body);
                                 });
                                 user.last_notified_energy = new Date()

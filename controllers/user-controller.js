@@ -119,7 +119,29 @@ class UserController {
     }
 
     async channelWebhook(req, res, next) {
-        console.log('HOOK')
+        console.log('HOOK', req.body)
+        const texts = {
+            start: {
+                ru: (ref_code) => `
+Добро пожаловать в HOGYX! Нажимай на монетку и увеличивай свой баланс 🤝
+        
+- Поднимитесь на вершину таблицы лидеров и получите вкусные награды в виде Airdrops. 🥇
+- Большая часть распределения токенов HOGYX (HOG) произойдет среди игроков здесь. 🪂
+- Следи за новыми заданиями ведь кроме токена у тебя есть шанс получить уникальные награды. 🎁
+                
+Твоя реферальная ссылка: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
+        `,
+                en: (ref_code) => `
+Welcome to HOGYX! Click on the coin and increase your balance 🤝
+ 
+- Climb to the top of the leaderboard and get delicious rewards in the form of Airdrops. 🥇
+- Most of the distribution of HOGYX (HOG) tokens will happen among the players here. 🪂
+- Keep an eye on new tasks, because besides the token, you have a chance to get unique rewards. 🎁
+             
+Your referral link: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
+        `,
+            }
+        }
         try {
             const { chat_member } = req.body
 
