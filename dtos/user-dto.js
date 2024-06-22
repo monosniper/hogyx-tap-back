@@ -21,6 +21,7 @@ module.exports = class UserDto {
     last_day_gift;
     inst_subscribed;
     tt_subscribed;
+    language_code;
 
     constructor(model) {
         this.id = model._id;
@@ -46,5 +47,6 @@ module.exports = class UserDto {
         this.last_day_gift = model.last_day_gift;
         this.inst_subscribed = model.inst_subscribed;
         this.tt_subscribed = model.tt_subscribed;
+        this.language_code = model.language_code;
     }
 }

@@ -28,6 +28,7 @@ const UserSchema = new Schema({
     start_offline_income: {type: Date},
     last_notified_offline: {type: Date},
     last_notified_energy: {type: Date},
+    language_code: {type: String, default: 'ru'},
     current_day: {type: Schema.Types.Number, default: 0},
 }, {timestamps: true});
 

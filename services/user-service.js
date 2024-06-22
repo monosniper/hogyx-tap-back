@@ -5,9 +5,11 @@ const makeid = require("../helpers/makeId");
 const {levels, shop, gifts} = require("../config");
 const diff_hours = require("../helpers/diffHours");
 const NotificationService = require('../services/notification-service');
+const bot = require("../bot");
+const lang = require("../lang");
 
 class UserService {
-    async login(tg_id, name, ref_code, isPremium) {
+    async login(tg_id, name, ref_code=false, isPremium=false, language_code='ru') {
         let user = await UserModel.findOne({tg_id}).populate('friends')
         let save = false
 
@@ -23,11 +25,13 @@ class UserService {
                 ref_user.save()
 
                 user.balance += isPremium ? gifts.other.friend.premium : gifts.other.friend.non_premium
+                await bot.sendMessage(ref_user.tg_id, lang(ref_user.language_code).new_ref(user.name));
                 save = true
             }
         } else {
-            if(user.name !== name) {
+            if(user.name !== name || user.language_code !== language_code) {
                 user.name = name
+                user.language_code = language_code
                 save = true
             }
         }

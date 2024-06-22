@@ -44,6 +44,10 @@ const start = () => {
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
 
+                bot.setMyCommands([
+                    {command: "/start", description: "Начать"}
+                ])
+
                 bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
                     allowed_updates: JSON.stringify(['message', 'chat_member'])
                 })
