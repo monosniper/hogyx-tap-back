@@ -48,6 +48,10 @@ const start = () => {
                     {command: "/start", description: "Начать"}
                 ])
 
+                // bot.sendVideo(269530936, 'test.mp4').then(r => {
+                //     console.log(r)
+                // })
+
                 bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
                     allowed_updates: JSON.stringify(['message', 'chat_member'])
                 })

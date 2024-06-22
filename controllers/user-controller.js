@@ -2,7 +2,7 @@ const UserService = require('../services/user-service');
 const bot = require("../bot");
 const lang = require("../lang");
 
-const video_file_id = "BAACAgIAAxkDAAIBLGZ3GFPouOr-zlN82XzKNUqanJSuAAIQVQACiHi5S7gbt4oN0C4nNQQ"
+const video_file_id = "BAACAgIAAxkDAAIBNGZ3GfP8EZZye4tkF3Y28uoYZkocAAIoVQACiHi5S9Syx8_ngkBHNQQ"
 
 class UserController {
     async login(req, res, next) {
