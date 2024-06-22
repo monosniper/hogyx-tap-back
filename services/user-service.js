@@ -154,8 +154,14 @@ class UserService {
         user.energy += count
         if(user.energy > user.max_energy) user.energy = user.max_energy
 
-        await user.save()
         user.last_user_online = new Date()
+        await user.save()
+
+        return new UserDto(user)
+    }
+
+    async update(tg_id, data) {
+        let user = await UserModel.updateOne({tg_id}, data, {new: true})
 
         return new UserDto(user)
     }

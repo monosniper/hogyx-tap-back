@@ -112,7 +112,7 @@ const start = () => {
                     const users = await UserModel.find({})
 
                     users.forEach((user) => {
-                        if((diff_minutes(new Date(), user.last_user_online) > 1) || !user.last_user_online) {
+                        if((diff_minutes(new Date(), user.last_user_online) > 1)) {
                             user.energy += 60 / main.energy_recovery
 
                             if(user.energy > user.max_energy) {
@@ -121,7 +121,7 @@ const start = () => {
 
                             const diff = diff_hours(new Date(), user.last_notified_energy)
 
-                            if(user.energy === user.max_energy && (diff > 24 || !user.last_notified_energy)) {
+                            if(user.energy === user.max_energy && diff > 24) {
                                 bot.sendMessage(user.tg_id, 'Энергия восстановлена - заходи скорее!');
                                 user.last_notified_energy = new Date()
                             }
@@ -131,7 +131,6 @@ const start = () => {
                     })
                 }
 
-                console.log('dasda')
                 // Energy recovery
                 cron.schedule('* * * * *', everyMinute);
             })
