@@ -2,6 +2,8 @@ const UserService = require('../services/user-service');
 const bot = require("../bot");
 const lang = require("../lang");
 
+const video_file_id = "BAACAgIAAxkDAAIBLGZ3GFPouOr-zlN82XzKNUqanJSuAAIQVQACiHi5S7gbt4oN0C4nNQQ"
+
 class UserController {
     async login(req, res, next) {
         try {
@@ -147,7 +149,8 @@ class UserController {
 
                 if(text === '/start') {
                     const user = await UserService.login(id, first_name, false, isPremium, language_code)
-                    await bot.sendMessage(id, lang(language_code).start(user.ref_code), {
+                    await bot.sendVideo(id, video_file_id, {
+                        caption: lang(language_code).start(user.ref_code),
                         reply_markup: JSON.stringify({
                             inline_keyboard: [
                                 [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
