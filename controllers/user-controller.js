@@ -46,6 +46,16 @@ class UserController {
         }
     }
 
+    async me(req, res, next) {
+        try {
+            const userData = await UserService.me(req.tg_id);
+
+            return res.json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async buyEnergy(req, res, next) {
         try {
             await UserService.buyEnergy(req.tg_id);

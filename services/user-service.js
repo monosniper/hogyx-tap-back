@@ -160,6 +160,12 @@ class UserService {
         return new UserDto(user)
     }
 
+    async me(tg_id) {
+        let user = await UserModel.findOne({tg_id}).populate('friends')
+
+        return new UserDto(user)
+    }
+
     async update(tg_id, data) {
         let user = await UserModel.findOneAndUpdate({tg_id}, data, {new: true})
 
