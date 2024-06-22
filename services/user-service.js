@@ -161,7 +161,7 @@ class UserService {
     }
 
     async update(tg_id, data) {
-        let user = await UserModel.updateOne({tg_id}, data, {new: true})
+        let user = await UserModel.findOneAndUpdate({tg_id}, data, {new: true})
 
         return new UserDto(user)
     }
