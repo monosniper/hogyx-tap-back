@@ -153,7 +153,7 @@ class UserService {
     }
 
     async energy(tg_id, count) {
-        let user = await UserModel.findOne({tg_id})
+        let user = await UserModel.findOne({tg_id}).populate('friends')
 
         user.energy += count
         if(user.energy > user.max_energy) user.energy = user.max_energy
@@ -177,7 +177,7 @@ class UserService {
     }
 
     async taps(tg_id, taps) {
-        let user = await UserModel.findOne({tg_id})
+        let user = await UserModel.findOne({tg_id}).populate('friends')
 
         const amount = taps * user.tap_amount
 
