@@ -1,3 +1,3 @@
 module.exports = {
-    energy_recovery: .8
+    energy_recovery: .8,
 }
