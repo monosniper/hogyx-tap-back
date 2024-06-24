@@ -188,9 +188,11 @@ class UserService {
         user.energy -= taps
         user.last_user_online = new Date()
 
-        if(user.experience >= levels[user.skill_level+1].value) {
+        const nextLevel = levels[user.skill_level+1]
+
+        if(nextLevel && user.experience >= nextLevel.value) {
             user.skill_level++
-            user.max_energy += levels[user.skill_level].add_energy
+            user.max_energy += nextLevel.add_energy
             user.energy = user.max_energy
         }
 
