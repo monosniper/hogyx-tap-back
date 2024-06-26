@@ -6,6 +6,7 @@ module.exports = class UserDto {
     hour_amount;
     tap_amount;
     balance;
+    xbalance;
     max_energy;
     name;
     taps_count;
@@ -32,6 +33,7 @@ module.exports = class UserDto {
         this.hour_amount = model.hour_amount;
         this.tap_amount = model.tap_amount;
         this.balance = model.balance;
+        this.xbalance = model.xbalance;
         this.max_energy = model.max_energy;
         this.taps_count = model.taps_count;
         this.ref_code = model.ref_code;

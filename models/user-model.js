@@ -5,6 +5,7 @@ const UserSchema = new Schema({
     name: {type: String, required: true},
     friends: [{type: Schema.Types.ObjectId, ref: 'User'}],
     balance: {type: Schema.Types.Number, default: 0},
+    xbalance: {type: Schema.Types.Number, default: 0},
     balance_by_day: {type: Schema.Types.Number, default: 0},
     experience: {type: Schema.Types.Number, default: 0},
     tap_amount: {type: Schema.Types.Number, default: 1},

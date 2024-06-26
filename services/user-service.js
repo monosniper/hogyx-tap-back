@@ -24,7 +24,7 @@ class UserService {
                 ref_user.balance += 50000
                 ref_user.save()
 
-                user.balance += isPremium ? gifts.other.friend.premium : gifts.other.friend.non_premium
+                user.balance += isPremium ? gifts.friend.prem.value : gifts.friend.no_prem.value
                 await bot.sendMessage(ref_user.tg_id, lang(ref_user.language_code).new_ref(user.name), {
                     reply_markup: JSON.stringify({
                         inline_keyboard: [
@@ -47,7 +47,7 @@ class UserService {
         if(!user.last_day_gift || (diff >= 24 && diff < 48)) {
             user.last_day_gift = new Date()
             if(user.current_day === 7) user.current_day = 0
-            const amount = gifts.days[user.current_day + 1]
+            const amount = gifts.days[user.current_day + 1].value
             user.balance += amount
             user.current_day++
             save = true
@@ -55,7 +55,7 @@ class UserService {
             await NotificationService.store(user._id, 'day_gift', {amount, day: user.current_day})
         } else if (diff >= 48) {
             user.current_day = 1
-            const amount = gifts.days[1]
+            const amount = gifts.days[1].value
             user.balance += amount
             user.last_day_gift = new Date()
             save = true
@@ -89,7 +89,8 @@ class UserService {
 
     async subscribed(tg_id) {
         const user = await UserModel.findOne({tg_id});
-        user.balance += gifts.other.subscribed
+        user.balance += gifts.subscribe.tg.value
+        user.xbalance += gifts.subscribe.tg.xvalue
         user.subscribed = true
         await user.save()
     }
@@ -141,7 +142,8 @@ class UserService {
             const diff = diff_hours(new Date(), user.last_site_visit)
 
             if(diff && diff > 24) {
-                user.balance += gifts.other.site_visit
+                user.balance += gifts.site_visit.value
+                user.xbalance += gifts.site_visit.xvalue
                 user.last_site_visit = new Date()
 
                 await user.save()
