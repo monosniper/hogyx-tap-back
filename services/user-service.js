@@ -146,7 +146,7 @@ class UserService {
 
     async accountLink(hogyx_user_id, tg_id) {
         const user = await UserModel.findOne({tg_id})
-        console.log(user, user?.hogyx_user_id)
+        console.log(user, user?.hogyx_user_id, tg_id)
         if(user && !(user?.hogyx_user_id)) {
             console.log(user.hogyx_user_id)
             user.hogyx_user_id = hogyx_user_id
