@@ -103,7 +103,7 @@ const start = () => {
                             if(diff < 24) {
                                 user.offline_income += user.hour_amount
                             } else if(diff_hours(new Date(), user.last_notified_offline) > 24) {
-                                bot.sendMessage(user.tg_id, 'Вы достигли максимальной ежедневной награды - ' + user.offline_income + ', зайдите, чтобы ее забрать!').catch((error) => {
+                                bot.sendMessage(user.tg_id, 'Вы достигли максимальной оффлайн награды - ' + user.offline_income + ', зайдите, чтобы ее забрать!').catch((error) => {
                                     console.log(error.code, '134');
                                     console.log(error.response.body);
                                 });

@@ -25,7 +25,13 @@ class UserService {
                 ref_user.save()
 
                 user.balance += isPremium ? gifts.other.friend.premium : gifts.other.friend.non_premium
-                await bot.sendMessage(ref_user.tg_id, lang(ref_user.language_code).new_ref(user.name));
+                await bot.sendMessage(ref_user.tg_id, lang(ref_user.language_code).new_ref(user.name), {
+                    reply_markup: JSON.stringify({
+                        inline_keyboard: [
+                            [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
+                        ]
+                    })
+                });
                 save = true
             }
         } else {
@@ -64,11 +70,11 @@ class UserService {
             await NotificationService.store(user._id, 'hour_income', {amount: user.offline_income})
 
             user.offline_income = 0
-            user.start_offline_income = new Date()
 
             save = true
         }
 
+        user.start_offline_income = new Date()
         user.last_user_online = new Date()
         save && await user.save()
 

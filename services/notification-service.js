@@ -7,6 +7,10 @@ class NotificationService {
         await NotificationModel.create({user: user_id, type, data});
     }
 
+    async update(user_id, type, data) {
+        await NotificationModel.updateOne({user: user_id, type}, data);
+    }
+
     async makeRead(id) {
         const notification = await NotificationModel.findById(id);
         notification.read_at = new Date();
