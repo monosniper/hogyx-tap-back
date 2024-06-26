@@ -144,8 +144,8 @@ class UserService {
         }
     }
 
-    async accountLink(hogyx_user_id) {
-        const user = await UserModel.findOne({hogyx_user_id})
+    async accountLink(hogyx_user_id, tg_id) {
+        const user = await UserModel.findOne({tg_id})
 
         if(user && !(user?.hogyx_user_id)) {
             user.hogyx_user_id = hogyx_user_id
