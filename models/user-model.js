@@ -4,7 +4,7 @@ const UserSchema = new Schema({
     tg_id: {type: String, unique: true, required: true},
     name: {type: String, required: true},
     friends: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    balance: {type: Schema.Types.Number, default: 0},
+    balance: {type: Schema.Types.BigInt, default: 0},
     xbalance: {type: Schema.Types.Number, default: 0},
     balance_by_day: {type: Schema.Types.Number, default: 0},
     experience: {type: Schema.Types.Number, default: 0},
