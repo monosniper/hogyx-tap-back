@@ -146,9 +146,11 @@ class UserService {
 
     async accountLink(hogyx_user_id, id) {
         const user = await UserModel.findById(id)
-        console.log(user, user?.hogyx_user_id, id)
+
         if(user && !(user?.hogyx_user_id)) {
             user.hogyx_user_id = hogyx_user_id
+            user.balance += gifts.link_account.value
+            user.xbalance += gifts.link_account.xvalue
             await user.save()
         }
     }
