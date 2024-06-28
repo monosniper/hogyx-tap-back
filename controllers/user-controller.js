@@ -102,7 +102,7 @@ class UserController {
 
     async siteVisited(req, res, next) {
         try {
-            const { hogyx_user_id } = req.params
+            const { hogyx_user_id } = req.body
             await UserService.siteVisited(hogyx_user_id);
 
             return res.json('ok');
@@ -114,7 +114,6 @@ class UserController {
     async accountLink(req, res, next) {
         try {
             const { hogyx_user_id, connect } = req.body
-            console.log('hui', req.body)
             await UserService.accountLink(hogyx_user_id, connect);
 
             return res.json('ok');

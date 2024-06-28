@@ -15,7 +15,7 @@ router.patch('/buy/energy', TGMiddleware, UserController.buyEnergy);
 router.patch('/buy/tap', TGMiddleware, UserController.buyTap);
 router.patch('/buy/hour', TGMiddleware, UserController.buyHour);
 
-router.patch('/site-visited/:hogyx_user_id', UserController.siteVisited);
+router.patch('/site-visited', UserController.siteVisited);
 router.patch('/account-link', UserController.accountLink);
 
 router.get('/leaders', TGMiddleware, UserController.getLeaders);
