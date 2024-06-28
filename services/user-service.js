@@ -129,6 +129,7 @@ class UserService {
     }
 
     async siteVisited(hogyx_user_id) {
+        console.log(hogyx_user_id)
         const user = await UserModel.findOne({hogyx_user_id})
 
         if(user) {

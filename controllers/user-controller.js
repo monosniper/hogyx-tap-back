@@ -103,6 +103,7 @@ class UserController {
     async siteVisited(req, res, next) {
         try {
             const { hogyx_user_id } = req.params
+            console.log(hogyx_user_id)
             await UserService.siteVisited(hogyx_user_id);
 
             return res.json('ok');
