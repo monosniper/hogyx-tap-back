@@ -114,6 +114,7 @@ class UserController {
     async accountLink(req, res, next) {
         try {
             const { hogyx_user_id, connect } = req.body
+            console.log('hui', req.body)
             await UserService.accountLink(hogyx_user_id, connect);
 
             return res.json('ok');
