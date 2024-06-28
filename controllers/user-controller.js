@@ -113,8 +113,8 @@ class UserController {
 
     async accountLink(req, res, next) {
         try {
-            const { hogyx_user_id } = req.params
-            await UserService.accountLink(hogyx_user_id, req.tg_id);
+            const { hogyx_user_id, connect } = req.body
+            await UserService.accountLink(hogyx_user_id, connect);
 
             return res.json('ok');
         } catch (e) {
