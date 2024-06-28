@@ -21,9 +21,12 @@ class UserService {
                 }, {new: true})
 
                 ref_user.balance += 50000
+                ref_user.xbalance += gifts.friend.no_prem.xcoins
                 ref_user.save()
 
-                user.balance += isPremium ? gifts.friend.prem.value : gifts.friend.no_prem.value
+                user.balance += isPremium ? gifts.friend.prem.value : gifts.friend.no_prem.coins
+                user.xbalance += isPremium ? gifts.friend.prem.xcoins : gifts.friend.no_prem.coins
+
                 await bot.sendMessage(ref_user.tg_id, lang(ref_user.language_code).new_ref(user.name), {
                     reply_markup: JSON.stringify({
                         inline_keyboard: [
