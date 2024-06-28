@@ -134,7 +134,7 @@ class UserService {
         if(user) {
             const diff = diff_hours(new Date(), user.last_site_visit)
 
-            if(diff && diff > 24) {
+            if(diff > 24 || user.last_site_visit) {
                 user.balance += gifts.site_visit.value
                 user.xbalance += gifts.site_visit.xvalue
                 user.last_site_visit = new Date()
