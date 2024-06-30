@@ -6,9 +6,9 @@ const video_file_id = "BAACAgIAAxkDAAIBNGZ3GfP8EZZye4tkF3Y28uoYZkocAAIoVQACiHi5S
 
 class UserController {
     async login(req, res, next) {
-        try {
-            const {name, ref_code, isPremium} = req.body;
-            const userData = await UserService.login(req.tg_id, name, ref_code, isPremium);
+        try {1
+            const {name, ref_code, isPremium, language_code} = req.body;
+            const userData = await UserService.login(req.tg_id, name, ref_code, isPremium, language_code);
 
             // await NotificationService.store(userData.id, 'day_gift', {day: 2, amount: 1000})
 
@@ -83,6 +83,17 @@ class UserController {
     async buyHour(req, res, next) {
         try {
             await UserService.buyHour(req.tg_id);
+
+            return res.json('ok');
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async buyDetail(req, res, next) {
+        try {
+            const { server, detail } = req.body
+            await UserService.buyDetail(req.tg_id, server, detail);
 
             return res.json('ok');
         } catch (e) {

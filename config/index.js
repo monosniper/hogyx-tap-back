@@ -3,6 +3,7 @@ const shop = require("./shop");
 const gifts = require("./gifts");
 const percents = require("./percents");
 const main = require("./main");
+const servers = require("./servers");
 
 module.exports = {
     levels,
@@ -10,4 +11,5 @@ module.exports = {
     gifts,
     percents,
     main,
+    servers,
 }

@@ -1,3 +1,5 @@
+const Server = require("../Instances/Server");
+
 module.exports = class UserDto {
     id;
     tg_id;
@@ -23,6 +25,7 @@ module.exports = class UserDto {
     inst_subscribed;
     tt_subscribed;
     language_code;
+    servers;
 
     constructor(model) {
         this.id = model._id;
@@ -50,5 +53,6 @@ module.exports = class UserDto {
         this.inst_subscribed = model.inst_subscribed;
         this.tt_subscribed = model.tt_subscribed;
         this.language_code = model.language_code;
+        this.servers = model.servers.map(server => new Server(server));
     }
 }

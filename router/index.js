@@ -1,6 +1,7 @@
 const Router = require('express').Router;
 const UserController = require('../controllers/user-controller');
 const NotificationController = require('../controllers/notification-controller');
+const DevController = require('../controllers/dev-controller');
 const TGMiddleware = require('../middlewares/tg-middleware');
 
 const router = new Router();
@@ -14,6 +15,7 @@ router.get('/me', TGMiddleware, UserController.me);
 router.patch('/buy/energy', TGMiddleware, UserController.buyEnergy);
 router.patch('/buy/tap', TGMiddleware, UserController.buyTap);
 router.patch('/buy/hour', TGMiddleware, UserController.buyHour);
+router.patch('/buy/detail', TGMiddleware, UserController.buyDetail);
 
 router.patch('/site-visited', UserController.siteVisited);
 router.patch('/account-link', UserController.accountLink);
@@ -24,5 +26,7 @@ router.get('/notifications', TGMiddleware, NotificationController.getUnread);
 router.patch('/notifications/:id', TGMiddleware, NotificationController.makeRead);
 
 router.post('/channel-webhook', UserController.channelWebhook);
+
+router.get('/dev/set-servers', DevController.setServers);
 
 module.exports = router;

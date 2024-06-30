@@ -38,7 +38,7 @@ class UserService {
         } else {
             if(user.name !== name || user.language_code !== language_code) {
                 user.name = name
-                user.language_code = language_code
+                // user.language_code = language_code
             }
         }
 
@@ -126,6 +126,24 @@ class UserService {
             user.hour_level++
             user.hour_amount += next_level.value
             user.balance -= next_level.cost
+            user.last_user_online = new Date()
+            user.save()
+        }
+    }
+
+    async buyDetail(tg_id, server_name, detail_name) {
+        const user = await UserModel.findOne({tg_id})
+        const server_index = user.servers.findIndex(({name}) => name === server_name)
+        const detail_index = user.servers[server_index].details.findIndex(({name}) => name === detail_name)
+        const detail = user.servers[server_index].details[detail_index]
+        const next_level = detail.levels[detail.level + 1]
+
+        if(user.balance >= next_level.price) {
+            const newServers = JSON.parse(JSON.stringify(user.servers))
+            newServers[server_index].details[detail_index].level++
+            user.servers = newServers
+            user.hour_amount += next_level.income
+            user.balance -= next_level.price
             user.last_user_online = new Date()
             user.save()
         }

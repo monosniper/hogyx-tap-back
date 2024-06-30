@@ -9,10 +9,11 @@ const fileUpload = require('express-fileupload');
 const cron = require('node-cron');
 const UserModel = require('./models/user-model');
 const NotificationService = require('./services/notification-service');
-const {percents, main} = require("./config");
+const {percents, main, servers} = require("./config");
 const diff_hours = require("./helpers/diffHours");
 const diff_minutes = require("./helpers/diffMinutes");
 const bot = require("./bot");
+const Server = require("./Instances/Server");
 
 const PORT = process.env.PORT || 5000;
 
@@ -41,6 +42,13 @@ app.use(express.static('uploads', {
 const start = () => {
     try {
         mongoose.connect(process.env.DB_URL, { dbName: 'hogyx-tap' }).then(() => {
+
+            // UserModel.create({tg_id: 546456456, name: "tstesttt"})
+            // console.log(servers[0].details[0])
+            // UserModel.findOne({name: "tstesttt"}).then(user => {
+            //     console.log(new Server(user.servers[3]))
+            // })
+
             app.listen(PORT, () => {
                 console.log('Server started at port ' + PORT);
 

@@ -1,4 +1,6 @@
 const {Schema, model} = require('mongoose');
+const {servers} = require("../config");
+const Server = require("../Instances/Server");
 
 const UserSchema = new Schema({
     tg_id: {type: String, unique: true, required: true},
@@ -31,6 +33,7 @@ const UserSchema = new Schema({
     last_notified_energy: {type: Date},
     language_code: {type: String, default: 'ru'},
     current_day: {type: Schema.Types.Number, default: 0},
+    servers: {type: Array, default: servers.map(server => new Server(server))},
 }, {timestamps: true});
 
 module.exports = model('User', UserSchema);
