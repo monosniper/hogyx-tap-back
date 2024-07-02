@@ -85,10 +85,12 @@ class UserService {
 
     async subscribed(tg_id) {
         const user = await UserModel.findOne({tg_id});
-        user.balance += gifts.subscribe.tg.value
-        user.xbalance += gifts.subscribe.tg.xvalue
-        user.subscribed = true
-        await user.save()
+        if(user) {
+            user.balance += gifts.subscribe.tg.value
+            user.xbalance += gifts.subscribe.tg.xvalue
+            user.subscribed = true
+            await user.save()
+        }
     }
 
     async buyEnergy(tg_id) {
