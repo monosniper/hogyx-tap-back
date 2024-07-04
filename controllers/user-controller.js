@@ -173,11 +173,11 @@ class UserController {
                     });
                 }
             }
+
+            return res.json('ok');
         } catch (e) {
             next(e);
         }
-
-        return res.json('ok');
     }
 }
 
