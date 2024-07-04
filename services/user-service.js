@@ -7,13 +7,20 @@ const diff_hours = require("../helpers/diffHours");
 const NotificationService = require('../services/notification-service');
 const bot = require("../bot");
 const lang = require("../lang");
+const {servers} = require("../config");
+const Server = require("../Instances/Server");
 
 class UserService {
     async login(tg_id, name, ref_code=false, isPremium=false, language_code='ru') {
         let user = await UserModel.findOne({tg_id}).populate('friends')
 
         if(!user) {
-            user = await UserModel.create({tg_id, name, ref_code: makeid(24)})
+            user = await UserModel.create({
+                tg_id,
+                name,
+                ref_code: makeid(24),
+                servers: servers.map(server => new Server(server))
+            })
 
             if(ref_code) {
                 const ref_user = await UserModel.findOneAndUpdate({ ref_code }, {
@@ -36,6 +43,7 @@ class UserService {
                 });
             }
         } else {
+            if(!user.servers) user.servers = servers.map(server => new Server(server))
             if(user.name !== name || user.language_code !== language_code) {
                 user.name = name
                 // user.language_code = language_code

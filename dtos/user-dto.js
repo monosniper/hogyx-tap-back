@@ -53,6 +53,6 @@ module.exports = class UserDto {
         this.inst_subscribed = model.inst_subscribed;
         this.tt_subscribed = model.tt_subscribed;
         this.language_code = model.language_code;
-        this.servers = model.servers.map(server => new Server(server));
+        this.servers = model.servers?.map(server => new Server(server));
     }
 }
