@@ -160,7 +160,7 @@ class UserService {
     }
 
     async siteVisited(hogyx_user_id) {
-        const user = await UserModel.findOne({hogyx_user_id: hogyx_user_id.toString()})
+        const user = await UserModel.findOne({hogyx_user_id: hogyx_user_id?.toString()})
 
         if(user) {
             const diff = diff_hours(new Date(), user.last_site_visit)
