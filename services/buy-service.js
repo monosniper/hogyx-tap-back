@@ -77,7 +77,7 @@ class BuyService {
 			'Up to ' + server.max_income + 'HOG / hour',
 			'payload',
 			'',
-			'XRT',
+			'XTR',
 			[{label: serverNames[server_name], amount: server.price * 100}]
 		)
 	}
