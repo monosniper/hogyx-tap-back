@@ -2,7 +2,6 @@ require('dotenv').config();
 const UserModel = require('../models/user-model');
 const {shop, servers} = require("../config");
 const bot = require("../bot");
-const {serverNames} = require("../config/servers");
 
 class BuyService {
 	async energy(tg_id) {
@@ -64,6 +63,12 @@ class BuyService {
 	}
 
 	async server(tg_id, server_name) {
+		const serverNames = {
+			start: 'Start',
+			medium: 'Medium',
+			max: 'Max',
+			ultra: 'Ultra',
+		}
 		const server = servers.find(({name}) => name === server_name)
 
 		return await bot.sendInvoice(
