@@ -74,7 +74,7 @@ class BuyService {
 		return await bot.createInvoiceLink(
 			serverNames[server_name],
 			'Up to ' + server.max_income + 'HOG / hour',
-			'',
+			'payload',
 			'',
 			'XTR',
 			[{label: serverNames[server_name], amount: server.price * 100}],
