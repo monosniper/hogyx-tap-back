@@ -71,14 +71,16 @@ class BuyService {
 		}
 		const server = servers.find(({name}) => name === server_name)
 
-		return await bot.sendInvoice(
-			tg_id,
+		return await bot.createInvoiceLink(
 			serverNames[server_name],
 			'Up to ' + server.max_income + 'HOG / hour',
-			'payload',
+			'',
 			'',
 			'XTR',
-			[{label: serverNames[server_name], amount: server.price * 100}]
+			[{label: serverNames[server_name], amount: server.price * 100}],
+			{
+				photo_url: `https://tap-api.hogyx.io/servers/${server_name}.webp`
+			}
 		)
 	}
 }
