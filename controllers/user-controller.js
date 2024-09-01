@@ -2,6 +2,8 @@ const UserService = require('../services/user-service');
 const bot = require("../bot");
 const lang = require("../lang");
 
+
+
 const video_file_id = "BAACAgIAAxkDAAIBNGZ3GfP8EZZye4tkF3Y28uoYZkocAAIoVQACiHi5S9Syx8_ngkBHNQQ"
 
 class UserController {
@@ -171,11 +173,11 @@ class UserController {
                     });
                 }
             }
+
+            return res.json('ok');
         } catch (e) {
             next(e);
         }
-
-        return res.json('ok');
     }
 }
 
