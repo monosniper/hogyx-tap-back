@@ -1,4 +1,5 @@
 const Router = require('express').Router;
+const BuyController = require('../controllers/buy-controller');
 const UserController = require('../controllers/user-controller');
 const NotificationController = require('../controllers/notification-controller');
 const DevController = require('../controllers/dev-controller');
@@ -12,10 +13,11 @@ router.patch('/energy', TGMiddleware, UserController.energy);
 router.patch('/update', TGMiddleware, UserController.update);
 router.get('/me', TGMiddleware, UserController.me);
 
-router.patch('/buy/energy', TGMiddleware, UserController.buyEnergy);
-router.patch('/buy/tap', TGMiddleware, UserController.buyTap);
-router.patch('/buy/hour', TGMiddleware, UserController.buyHour);
-router.patch('/buy/detail', TGMiddleware, UserController.buyDetail);
+router.patch('/buy/energy', TGMiddleware, BuyController.energy);
+router.patch('/buy/tap', TGMiddleware, BuyController.tap);
+router.patch('/buy/hour', TGMiddleware, BuyController.hour);
+router.patch('/buy/detail', TGMiddleware, BuyController.detail);
+router.patch('/buy/server', TGMiddleware, BuyController.server);
 
 router.patch('/site-visited', UserController.siteVisited);
 router.patch('/account-link', UserController.accountLink);

@@ -1,6 +1,13 @@
 const Server = require("../Instances/Server");
 const Detail = require("../Instances/Detail");
 
+export const serverNames = {
+	start: 'Start',
+	medium: 'Medium',
+	max: 'Max',
+	ultra: 'Ultra',
+}
+
 const servers = [
 	new Server({
 		name: 'start',
