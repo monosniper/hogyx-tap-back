@@ -79,7 +79,7 @@ class BuyService {
 			'XTR',
 			[{label: serverNames[server_name], amount: server.price * 100}],
 			{
-				photo_url: `https://tap-api.hogyx.io/servers/${server_name}.webp`
+				photo_url: `https://tap-api.hogyx.io/servers/${server_name}.png`
 			}
 		)
 	}
