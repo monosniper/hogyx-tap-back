@@ -72,8 +72,8 @@ class BuyService {
 		const server = servers.find(({name}) => name === server_name)
 
 		return await bot.createInvoiceLink(
-			serverNames[server_name],
-			'Up to ' + server.max_income + 'HOG / hour',
+			'Server ' + serverNames[server_name],
+			'Up to ' + server.max_income + ' HOG / hour',
 			'payload',
 			'',
 			'XTR',

@@ -61,7 +61,12 @@ const start = () => {
                 // })
 
                 bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
-                    allowed_updates: JSON.stringify(['message', 'chat_member'])
+                    allowed_updates: JSON.stringify([
+                        'message',
+                        'chat_member',
+                        'pre_checkout_query',
+                        'successful_payment',
+                    ])
                 })
 
                 cron.schedule('0 0 * * *', async () => {
