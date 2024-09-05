@@ -14,4 +14,7 @@ Your referral link: https://t.me/hogyx_tap_bot/app?startapp=${ref_code}
 ➕ You have successfully invited 【${name}】!
 🪙 ${gifts.friend.no_prem.coins} HOG and ${gifts.friend.no_prem.xcoins} X-HOG have been sent to you as a reward for the invitation! 
 Invite your friends to our friendly community and get more rewards`,
+    thanks_for_buy_server: server_name => `
+	🎉 Congratulations on purchasing server ${server_name}! 🎉
+    `
 }
