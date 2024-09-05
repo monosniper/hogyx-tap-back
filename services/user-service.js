@@ -243,7 +243,16 @@ class UserService {
         user.servers = newServers
         user.last_user_online = new Date()
         console.log(newServers, server_index)
-        user.save()
+        await user.save()
+
+        await bot.sendPhoto(tg_id, `https://tap-api.hogyx.io/servers/${server_name}.png`, {
+            caption: lang(user.language_code).thanks_for_buy_server(server_name),
+            reply_markup: JSON.stringify({
+                inline_keyboard: [
+                    [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
+                ]
+            })
+        });
     }
 }
 
