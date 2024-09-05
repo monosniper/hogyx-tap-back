@@ -159,7 +159,7 @@ class UserController {
 
     static async message(data) {
         const { text, chat: { id, first_name }, from: { language_code, isPremium }, successful_payment } = data
-
+        console.log(successful_payment)
         if(successful_payment) await UserController.successful_payment(id, successful_payment.invoice_payload)
         else {
             if(text === '/start') {
