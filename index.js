@@ -67,7 +67,6 @@ const start = () => {
                         'message',
                         'chat_member',
                         'pre_checkout_query',
-                        'successful_payment',
                     ])
                 })
 

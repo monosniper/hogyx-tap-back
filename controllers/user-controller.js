@@ -154,6 +154,8 @@ class UserController {
     }
 
     static async message(data) {
+        console.log(data.entities)
+
         const { text, chat: { id, first_name }, from: { language_code, isPremium } } = data
 
         if(text === '/start') {
@@ -176,13 +178,6 @@ class UserController {
         await bot.answerPreCheckoutQuery(id, true)
     }
 
-    static async successful_payment(data) {
-        console.log(data)
-        // const { id } = data
-
-        // await bot.answerPreCheckoutQuery(id, true)
-    }
-
     async channelWebhook(req, res, next) {
         console.log('HOOK', req.body)
 
@@ -191,13 +186,11 @@ class UserController {
                 chat_member,
                 message,
                 pre_checkout_query,
-                successful_payment,
             } = req.body
 
             if(chat_member) await UserController.chat_member(chat_member)
             else if(message) await UserController.message(message)
             else if(pre_checkout_query) await UserController.pre_checkout_query(pre_checkout_query)
-            else if(successful_payment) await UserController.successful_payment(successful_payment)
 
             return res.json('ok');
         } catch (e) {
