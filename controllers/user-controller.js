@@ -135,7 +135,7 @@ class UserController {
         }
     }
 
-    async chat_member(data) {
+    static async chat_member(data) {
         const {
             chat: { id: chat_id },
             from: { id: user_tg_id },
@@ -153,7 +153,7 @@ class UserController {
         }
     }
 
-    async message(data) {
+    static async message(data) {
         const { text, chat: { id, first_name }, from: { language_code, isPremium } } = data
 
         if(text === '/start') {
@@ -170,13 +170,13 @@ class UserController {
         }
     }
 
-    async pre_checkout_query(data) {
+    static async pre_checkout_query(data) {
         const { id } = data
 
         await bot.answerPreCheckoutQuery(id, true)
     }
 
-    async successful_payment(data) {
+    static async successful_payment(data) {
         console.log(data)
         // const { id } = data
 
@@ -194,10 +194,10 @@ class UserController {
                 successful_payment,
             } = req.body
 
-            if(chat_member) await this.chat_member(chat_member)
-            else if(message) await this.message(message)
-            else if(pre_checkout_query) await this.pre_checkout_query(pre_checkout_query)
-            else if(successful_payment) await this.successful_payment(successful_payment)
+            if(chat_member) await UserController.chat_member(chat_member)
+            else if(message) await UserController.message(message)
+            else if(pre_checkout_query) await UserController.pre_checkout_query(pre_checkout_query)
+            else if(successful_payment) await UserController.successful_payment(successful_payment)
 
             return res.json('ok');
         } catch (e) {
