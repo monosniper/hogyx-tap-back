@@ -39,6 +39,8 @@ app.use(express.static('uploads', {
     }
 }));
 
+const WEBHOOK_URL = "https://tap-api.hogyx.io/api/channel-webhook"
+
 const start = () => {
     try {
         mongoose.connect(process.env.DB_URL, { dbName: 'hogyx-tap' }).then(() => {
@@ -60,7 +62,7 @@ const start = () => {
                 //     console.log(r)
                 // })
 
-                bot.setWebHook("https://tap-api.hogyx.io/api/channel-webhook", {
+                bot.setWebHook(WEBHOOK_URL, {
                     allowed_updates: JSON.stringify([
                         'message',
                         'chat_member',

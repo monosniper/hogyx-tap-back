@@ -135,44 +135,69 @@ class UserController {
         }
     }
 
+    async chat_member(data) {
+        const {
+            chat: { id: chat_id },
+            from: { id: user_tg_id },
+            new_chat_member
+        } = data
+
+        if(new_chat_member) {
+            const { status } = new_chat_member
+
+            console.log('status', status, user_tg_id)
+
+            if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
+                await UserService.subscribed(user_tg_id)
+            }
+        }
+    }
+
+    async message(data) {
+        const { text, chat: { id, first_name }, from: { language_code, isPremium } } = data
+
+        if(text === '/start') {
+            const user = await UserService.login(id, first_name, false, isPremium, language_code)
+            await bot.sendVideo(id, video_file_id, {
+                caption: lang(language_code).start(user.ref_code),
+                reply_markup: JSON.stringify({
+                    inline_keyboard: [
+                        [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
+                        [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
+                    ]
+                })
+            });
+        }
+    }
+
+    async pre_checkout_query(data) {
+        const { id } = data
+
+        await bot.answerPreCheckoutQuery(id, true)
+    }
+
+    async successful_payment(data) {
+        console.log(data)
+        // const { id } = data
+
+        // await bot.answerPreCheckoutQuery(id, true)
+    }
+
     async channelWebhook(req, res, next) {
         console.log('HOOK', req.body)
 
         try {
-            const { chat_member, message } = req.body
+            const {
+                chat_member,
+                message,
+                pre_checkout_query,
+                successful_payment,
+            } = req.body
 
-            if(chat_member) {
-                const {
-                    chat: { id: chat_id },
-                    from: { id: user_tg_id },
-                    new_chat_member
-                } = chat_member
-
-                if(new_chat_member) {
-                    const { status } = new_chat_member
-
-                    console.log('status', status, user_tg_id)
-
-                    if(chat_id.toString() === (process.env.CHANNEL_ID).toString() && status === 'member') {
-                        await UserService.subscribed(user_tg_id)
-                    }
-                }
-            } else if (message) {
-                const { text, chat: { id, first_name }, from: { language_code, isPremium } } = message
-
-                if(text === '/start') {
-                    const user = await UserService.login(id, first_name, false, isPremium, language_code)
-                    await bot.sendVideo(id, video_file_id, {
-                        caption: lang(language_code).start(user.ref_code),
-                        reply_markup: JSON.stringify({
-                            inline_keyboard: [
-                                [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
-                                [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
-                            ]
-                        })
-                    });
-                }
-            }
+            if(chat_member) await this.chat_member(chat_member)
+            else if(message) await this.message(message)
+            else if(pre_checkout_query) await this.pre_checkout_query(pre_checkout_query)
+            else if(successful_payment) await this.successful_payment(successful_payment)
 
             return res.json('ok');
         } catch (e) {
