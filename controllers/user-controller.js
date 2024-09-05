@@ -160,15 +160,19 @@ class UserController {
 
         if(text === '/start') {
             const user = await UserService.login(id, first_name, false, isPremium, language_code)
-            await bot.sendVideo(id, video_file_id, {
-                caption: lang(language_code).start(user.ref_code),
-                reply_markup: JSON.stringify({
-                    inline_keyboard: [
-                        [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
-                        [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
-                    ]
-                })
-            });
+            try {
+                await bot.sendVideo(id, video_file_id, {
+                    caption: lang(language_code).start(user.ref_code),
+                    reply_markup: JSON.stringify({
+                        inline_keyboard: [
+                            [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
+                            [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
+                        ]
+                    })
+                });
+            } catch (e) {
+                console.log('can\'t find video')
+            }
         }
     }
 
