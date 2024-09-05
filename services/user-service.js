@@ -234,6 +234,16 @@ class UserService {
 
         return new UserDto(user)
     }
+
+    async giveServer(tg_id, server_name) {
+        const user = await UserModel.findOne({tg_id})
+        const newServers = user.servers
+        const server_index = user.servers.findIndex(({name}) => name === server_name)
+        newServers[server_index].is_buyed = true
+        user.servers = newServers
+        user.last_user_online = new Date()
+        user.save()
+    }
 }
 
 

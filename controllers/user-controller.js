@@ -153,25 +153,30 @@ class UserController {
         }
     }
 
+    async successful_payment(id, server_name) {
+        await UserService.giveServer(id, server_name)
+    }
+
     static async message(data) {
-        console.log(data.entities)
+        const { text, chat: { id, first_name }, from: { language_code, isPremium }, successful_payment } = data
 
-        const { text, chat: { id, first_name }, from: { language_code, isPremium } } = data
-
-        if(text === '/start') {
-            const user = await UserService.login(id, first_name, false, isPremium, language_code)
-            try {
-                await bot.sendVideo(id, video_file_id, {
-                    caption: lang(language_code).start(user.ref_code),
-                    reply_markup: JSON.stringify({
-                        inline_keyboard: [
-                            [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
-                            [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
-                        ]
-                    })
-                });
-            } catch (e) {
-                console.log('can\'t find video')
+        if(successful_payment) await UserController.successful_payment(id, successful_payment.invoice_payload)
+        else {
+            if(text === '/start') {
+                const user = await UserService.login(id, first_name, false, isPremium, language_code)
+                try {
+                    await bot.sendVideo(id, video_file_id, {
+                        caption: lang(language_code).start(user.ref_code),
+                        reply_markup: JSON.stringify({
+                            inline_keyboard: [
+                                [{text: '🕹️ Начать игру', web_app: {url: 'https://hogyx-tap-front.vercel.app'}}],
+                                [{text: '✨ Подписатсья на канал', url: 'https://t.me/hogyx_io'}],
+                            ]
+                        })
+                    });
+                } catch (e) {
+                    console.log('can\'t find video')
+                }
             }
         }
     }
