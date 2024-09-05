@@ -153,7 +153,7 @@ class UserController {
         }
     }
 
-    async successful_payment(id, server_name) {
+    static async successful_payment(id, server_name) {
         await UserService.giveServer(id, server_name)
     }
 
