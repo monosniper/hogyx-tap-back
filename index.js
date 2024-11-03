@@ -43,7 +43,7 @@ const WEBHOOK_URL = "https://tap-api.hogyx.io/api/channel-webhook"
 
 const start = () => {
     try {
-        mongoose.connect(process.env.DB_URL, { dbName: 'hogyx-tap' }).then(() => {
+        mongoose.connect(process.env.DB_URL, { dbName: process.env.DB_NAME }).then(() => {
 
             // UserModel.create({tg_id: 546456456, name: "tstesttt"})
             // console.log(servers[0].details[0])
